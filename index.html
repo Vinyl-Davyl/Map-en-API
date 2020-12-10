@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map | API </title>
+    <style>
+        #map{
+            height: 600px;
+            width: 100%;
+        }
+        h1{
+            text-align: center;
+            color: grey;
+            font-weight: 100;
+            text-transform: uppercase;
+            font-family: sans-serif;
+            margin-bottom: 50px;
+            border: 1px solid gray;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Map | Google</h1>
+    <div id="map"></div>
+
+
+    <script>
+        function initMap(){
+            //Map options
+            var options = {
+                zoom: 10,
+                center: {lat:6.4654,lng:3.4064}
+            }
+
+            //New map
+            var map = new
+            google.maps.Map(document.getElementById('map'), options);
+
+
+            //Listen for click on map
+            google.maps.event.addListener(map, 'click', function(event){
+                //Add marker
+                addMarker({coords:event.latLng});
+            });
+
+            /*
+            //Add marker
+            var marker = new google.maps.Marker({
+                position:{lat:6.6018, lng:3.3515},
+                map:map
+            });
+            // const image =
+            //     "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+            // const beachMarker = new google.maps.Marker({
+            //     position: { lat:6.6018, lng:3.3515 },
+            //     map,
+            //     icon: image,
+            // });
+
+            //Content
+            var infoWindow = new google.maps.InfoWindow({
+            content: '<h1>Ikeja, Lagos</h1>'
+            });
+
+            marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+            });
+            */
+
+            //Array of markers
+            var markers = [
+             {
+                coords: {lat:6.6018, lng:3.3515},
+                iconImage: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                content:'<h1>Ikeja, ML</h1>'
+             },
+                {
+                coords: {lat:6.6131, lng:3.2659},
+                content:'<h1>Ipaja, MA</h1>'
+                },
+                {
+                coords: {lat:6.6194, lng:3.5105},
+                content:'<h1>Ikorodu, ML</h1>'
+                },
+                {
+                coords: {lat:6.4698, lng:3.5852},
+                content:'<h1>Lekki, LI</h1>'
+                }
+            ];
+
+            //Loop through markers
+            for(var i = 0; i < markers.length; i++){
+                // Add each marker
+                addMarker(markers[i]);
+            }
+
+            // //Done on the array, cleaner
+            // addMarker({
+            //     coords: {lat:6.6018, lng:3.3515},
+            //     iconImage: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+            //     content:'<h1>Ikeja, ML</h1>'
+            // });
+            // addMarker({
+            //     coords: {lat:6.6131, lng:3.2659},
+            //     content:'<h1>Ipaja, MA</h1>'
+            //     });
+            // addMarker({
+            //     coords: {lat:6.6194, lng:3.5105},
+            //     content:'<h1>Ikorodu, ML</h1>'
+            //     });
+            // addMarker({
+            //     coords: {lat:6.4698, lng:3.5852},
+            //     content:'<h1>Lekki, LI</h1>'
+            //     });
+
+            //Add Marker Function
+            function addMarker (props){
+                var marker = new google.maps.Marker({
+                position: props.coords,
+                map:map,
+                //icon: props.iconImage
+            });
+
+            //Check for customicon
+            if(props.iconImage){
+                //Set icon image
+                marker.setIcon(props.iconImage);
+            }
+
+
+            //Check content
+            if(props.content){
+             var infoWindow = new google.maps.InfoWindow({
+                content: props.content
+            });
+
+            marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+            });
+            }
+            }
+        }
+
+
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXEb9-JcUxNd7vZN6CruO5D_fxNAULVf4&callback=initMap&libraries=&v=weekly"
+    defer
+  ></script>
+
+</body>
+</html>
